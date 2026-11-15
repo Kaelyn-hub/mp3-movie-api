@@ -13,3 +13,5 @@ from .models import (
 from .storage import MovieStorage
 from .models import MovieUploadInfo, MovieDataResponse, MovieProcessingReport
 from .utils import setup_logging
+
+from .cache import MovieCache
