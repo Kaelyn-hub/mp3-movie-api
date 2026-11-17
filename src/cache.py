@@ -15,12 +15,11 @@ class MovieCache:
         """Return the cached response dictionary, or None."""
         key = self.make_key(limit)
         cached = self.client.get(key)
-        if cached:
-            logger.info("Cache HIT")
-            return json.loads(cached)
-        else:
-            logger.info("Cache MISS")
+        if cached is None:
+            logger.debug(f"Cache MISS: {key}")
             return None
+        logger.debug(f"Cache HIT: {key}")
+        return json.loads(cached)
 
     def set(self, limit, response):
         """Cache the response dictionary for 90 seconds."""
