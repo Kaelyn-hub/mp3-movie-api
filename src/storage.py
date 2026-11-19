@@ -56,20 +56,20 @@ class MovieStorage:
             if column not in MOVIE_COLUMNS:
                 logger.error(f"Unsupported column: {column}")
                 raise ValueError(f"Unsupported column: {column}")
-            selected_columns = ", ".join(["id"] + columns)
-            connection = get_connection(self.db_path)
-            try:
-                cursor = connection.execute(
-                f"SELECT {selected_columns} FROM movies ORDER BY id LIMIT ?",
-                (limit,),
-                )
-                rows = cursor.fetchall()
-                result = [dict(row) for row in rows]
-                logger.debug(f"Selected columns {columns}: rows={len(result)}")
-                return result
+        selected_columns = ", ".join(["id"] + columns)
+        connection = get_connection(self.db_path)
+        try:
+            cursor = connection.execute(
+            f"SELECT {selected_columns} FROM movies ORDER BY id LIMIT ?",
+            (limit,),
+            )
+            rows = cursor.fetchall()
+            result = [dict(row) for row in rows]
+            logger.debug(f"Selected columns {columns}: rows={len(result)}")
+            return result
 
-            finally:
-                connection.close()
+        finally:
+            connection.close()
     def count_movies(self):
         """Return the number of stored movies using SQL COUNT(*)."""
         connection = get_connection(self.db_path)
